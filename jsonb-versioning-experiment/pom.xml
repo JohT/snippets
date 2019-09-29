@@ -1,0 +1,110 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>io.github.joht.experiment</groupId>
+	<artifactId>jsonb-versioning-experiment</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>jsonb-versioning-experiment</name>
+	<description>
+		Contains ideas and experiments for versioning with JSON-B (Binding).
+		It should be possible to deserialize a JSON String, that was serialized with an older version of an object.
+	</description>
+	<url>https://github.com/JohT/snippets/tree/master/jsonb-versioning-experiment</url>
+	<licenses>
+		<license>
+			<name>Apache License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+		</license>
+	</licenses>
+
+	<properties>
+		<maven.compiler.version>3.8.0</maven.compiler.version>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+		<jsonb.version>1.0</jsonb.version>
+		<jsonp.version>1.1.2</jsonp.version>
+
+		<junit.version>5.5.0</junit.version>
+		<hamcrest.version>2.1</hamcrest.version>
+	</properties>
+
+
+	<dependencies>
+		<!-- Microprofile JSON-B (Binding) -->
+		<dependency>
+			<groupId>javax.json.bind</groupId>
+			<artifactId>javax.json.bind-api</artifactId>
+			<version>${jsonb.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- Microprofile JSON-P (Parser) -->
+		<dependency>
+			<groupId>javax.json</groupId>
+			<artifactId>javax.json-api</artifactId>
+			<version>${jsonp.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- Testing -->
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.hamcrest</groupId>
+			<artifactId>hamcrest</artifactId>
+			<version>${hamcrest.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish</groupId>
+			<artifactId>javax.json</artifactId>
+			<version>1.1.4</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.eclipse</groupId>
+			<artifactId>yasson</artifactId>
+			<version>1.0.4</version>
+			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<artifactId>jakarta.json</artifactId>
+					<groupId>org.glassfish</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>jakarta.json.bind-api</artifactId>
+					<groupId>jakarta.json.bind</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>jakarta.json-api</artifactId>
+					<groupId>jakarta.json</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<finalName>${project.artifactId}</finalName>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>${maven.compiler.version}</version>
+					<configuration>
+						<source>${maven.compiler.source}</source>
+						<target>${maven.compiler.target}</target>
+						<encoding>${project.build.sourceEncoding}</encoding>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+
+</project>
