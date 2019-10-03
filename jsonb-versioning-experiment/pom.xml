@@ -19,7 +19,8 @@
 	</licenses>
 
 	<properties>
-		<maven.compiler.version>3.8.0</maven.compiler.version>
+		<maven.surefire.version>2.22.2</maven.surefire.version>
+		<maven.compiler.version>3.8.1</maven.compiler.version>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -27,7 +28,7 @@
 		<jsonb.version>1.0</jsonb.version>
 		<jsonp.version>1.1.2</jsonp.version>
 
-		<junit.version>5.5.0</junit.version>
+		<junit.version>5.5.2</junit.version>
 		<hamcrest.version>2.1</hamcrest.version>
 	</properties>
 
@@ -102,6 +103,10 @@
 						<target>${maven.compiler.target}</target>
 						<encoding>${project.build.sourceEncoding}</encoding>
 					</configuration>
+				</plugin>
+				<plugin>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>${maven.surefire.version}</version>
 				</plugin>
 			</plugins>
 		</pluginManagement>
