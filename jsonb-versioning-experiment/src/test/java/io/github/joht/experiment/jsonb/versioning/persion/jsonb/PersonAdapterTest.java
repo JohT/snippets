@@ -1,4 +1,4 @@
-package io.github.joht.experiment.jsonb.versioning;
+package io.github.joht.experiment.jsonb.versioning.persion.jsonb;
 
 import javax.json.bind.Jsonb;
 import javax.json.bind.JsonbBuilder;
@@ -10,9 +10,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import io.github.joht.experiment.jsonb.versioning.persion.api.Person;
 import io.github.joht.experiment.jsonb.versioning.persion.api.PersonFixture;
-import io.github.joht.experiment.jsonb.versioning.persion.jsonb.PersonAdapter;
 
-class JsonbVersioningExampleTest {
+class PersonAdapterTest {
 
     private final JsonbConfig jsonbConfig = new JsonbConfig();
     private final Jsonb jsonb = JsonbBuilder.create(jsonbConfig.withAdapters(new PersonAdapter(jsonbConfig)));
@@ -73,4 +72,5 @@ class JsonbVersioningExampleTest {
         assertEquals(person.name.surename, deserialized.name.surename);
         assertEquals(person.name.title, deserialized.name.title);
     }
+
 }

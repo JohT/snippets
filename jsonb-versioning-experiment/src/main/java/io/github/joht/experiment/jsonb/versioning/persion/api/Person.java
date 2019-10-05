@@ -3,8 +3,7 @@ package io.github.joht.experiment.jsonb.versioning.persion.api;
 /**
  * Represents a Person.
  * <p>
- * To keep it simple, all properties are <code>public</code>. <br>
- * TODO Expand to immutable object.
+ * To keep it short and simple, all properties are <code>public</code>. <br>
  * 
  * @author JohT
  */
@@ -12,7 +11,7 @@ public class Person {
     public Name name;
 
     public static final int getVersion(String json) {
-        // Note: Just an example, could be done more controlled using a version field.
+        // Note: Just a simple example, could be done more controlled using a version field.
         if (json.contains("\"title\"")) {
             return 0; // = current version
         }

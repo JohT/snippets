@@ -7,24 +7,24 @@ import javax.json.bind.JsonbConfig;
 import javax.json.bind.adapter.JsonbAdapter;
 
 import io.github.joht.experiment.jsonb.versioning.persion.VersioningSupport;
-import io.github.joht.experiment.jsonb.versioning.persion.api.Person;
+import io.github.joht.experiment.jsonb.versioning.persion.api.Name;
 
-public class PersonAdapter implements JsonbAdapter<Person, JsonObject> {
+public class NameAdapter implements JsonbAdapter<Name, JsonObject> {
 
-    private final VersioningSupport<Person> versioning;
+    private final VersioningSupport<Name> versioning;
 
-    public PersonAdapter(JsonbConfig config) {
+    public NameAdapter(JsonbConfig config) {
         Jsonb jsonb = JsonbBuilder.create(config);
-        this.versioning = new VersioningSupport<>(Person.class, jsonb::toJson, jsonb::fromJson);
+        this.versioning = new VersioningSupport<>(Name.class, jsonb::toJson, jsonb::fromJson);
     }
 
     @Override
-    public JsonObject adaptToJson(Person obj) {
+    public JsonObject adaptToJson(Name obj) {
         return versioning.reserialize(obj, JsonObject.class);
     }
 
     @Override
-    public Person adaptFromJson(JsonObject obj) {
+    public Name adaptFromJson(JsonObject obj) {
         return versioning.adaptFromJson(obj.toString());
     }
 }
