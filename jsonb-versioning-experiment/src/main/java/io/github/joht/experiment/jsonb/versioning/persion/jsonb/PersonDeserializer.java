@@ -2,17 +2,34 @@ package io.github.joht.experiment.jsonb.versioning.persion.jsonb;
 
 import java.lang.reflect.Type;
 
+import javax.json.bind.Jsonb;
+import javax.json.bind.JsonbBuilder;
+import javax.json.bind.JsonbConfig;
 import javax.json.bind.serializer.DeserializationContext;
 import javax.json.bind.serializer.JsonbDeserializer;
 import javax.json.stream.JsonParser;
 
+import io.github.joht.experiment.jsonb.versioning.persion.VersioningSupport;
 import io.github.joht.experiment.jsonb.versioning.persion.api.Person;
 
-//FIXME Ends in an endless loop. To be implemented right....
+/**
+ * Deserializes {@link Person}-Objects supporting all previous version.
+ * <p>
+ * TODO Generic versioning maybe using an interface or a wrapper.
+ * 
+ * @author JohT
+ */
 public class PersonDeserializer implements JsonbDeserializer<Person> {
+
+    private final VersioningSupport<Person> versioning;
+
+    public PersonDeserializer(JsonbConfig config) {
+        Jsonb jsonb = JsonbBuilder.create(config);
+        this.versioning = new VersioningSupport<>(Person.class, jsonb::toJson, jsonb::fromJson);
+    }
 
     @Override
     public Person deserialize(JsonParser parser, DeserializationContext ctx, Type rtType) {
-        return ctx.deserialize(rtType, parser);
+        return versioning.adaptFromJson(parser.getObject().toString());
     }
 }
