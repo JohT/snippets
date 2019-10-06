@@ -1,8 +1,8 @@
-package io.github.joht.experiment.jsonb.versioning.persion.api;
+package io.github.joht.experiment.jsonb.versioning.person.example;
 
-import io.github.joht.experiment.jsonb.versioning.persion.api.Person.V1;
-import io.github.joht.experiment.jsonb.versioning.persion.api.Person.V2;
-import io.github.joht.experiment.jsonb.versioning.persion.api.Person.V3;
+import io.github.joht.experiment.jsonb.versioning.person.example.Person.V1;
+import io.github.joht.experiment.jsonb.versioning.person.example.Person.V2;
+import io.github.joht.experiment.jsonb.versioning.person.example.Person.V3;
 
 /**
  * Object-Mother for Test-{@link Person}s. <br>

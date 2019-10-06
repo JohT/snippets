@@ -1,4 +1,4 @@
-package io.github.joht.experiment.jsonb.versioning.persion.jsonb;
+package io.github.joht.experiment.jsonb.versioning.person.example.jsonb;
 
 import java.lang.reflect.Type;
 
@@ -9,8 +9,8 @@ import javax.json.bind.serializer.DeserializationContext;
 import javax.json.bind.serializer.JsonbDeserializer;
 import javax.json.stream.JsonParser;
 
-import io.github.joht.experiment.jsonb.versioning.persion.VersioningSupport;
-import io.github.joht.experiment.jsonb.versioning.persion.api.Person;
+import io.github.joht.experiment.jsonb.versioning.VersioningSupport;
+import io.github.joht.experiment.jsonb.versioning.person.example.Person;
 
 /**
  * Deserializes {@link Person}-Objects supporting all previous version.

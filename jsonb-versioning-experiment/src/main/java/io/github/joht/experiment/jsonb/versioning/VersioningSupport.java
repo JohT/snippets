@@ -1,4 +1,4 @@
-package io.github.joht.experiment.jsonb.versioning.persion;
+package io.github.joht.experiment.jsonb.versioning;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

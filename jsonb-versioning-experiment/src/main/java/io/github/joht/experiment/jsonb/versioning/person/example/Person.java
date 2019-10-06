@@ -1,4 +1,4 @@
-package io.github.joht.experiment.jsonb.versioning.persion.api;
+package io.github.joht.experiment.jsonb.versioning.person.example;
 
 /**
  * Represents a Person.

@@ -1,4 +1,4 @@
-package io.github.joht.experiment.jsonb.versioning.persion.jsonb;
+package io.github.joht.experiment.jsonb.versioning.person.example.jsonb;
 
 import javax.json.bind.Jsonb;
 import javax.json.bind.JsonbBuilder;
@@ -8,38 +8,14 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import io.github.joht.experiment.jsonb.versioning.persion.api.Person;
-import io.github.joht.experiment.jsonb.versioning.persion.api.PersonFixture;
+import io.github.joht.experiment.jsonb.versioning.person.example.Person;
+import io.github.joht.experiment.jsonb.versioning.person.example.PersonFixture;
 
-class PersonAdapterTest {
+class PersonDeserializerTest {
 
-    private final JsonbConfig jsonbConfig = new JsonbConfig();
-    private final Jsonb jsonb = JsonbBuilder.create(jsonbConfig.withAdapters(new PersonAdapter(jsonbConfig)));
+    private final JsonbConfig config = new JsonbConfig();
+    private final Jsonb jsonb = JsonbBuilder.create(config.withDeserializers(new PersonDeserializer(config)));
     private final PersonFixture personFixture = PersonFixture.JOHN_DOE;
-
-    @Test
-    void version1SerializedCorrectly() {
-        Person.V1 person = personFixture.buildV1();
-        assertEquals(personFixture.getExpectedJsonRepresentation(1), jsonb.toJson(person));
-    }
-
-    @Test
-    void version2Serializable() {
-        Person.V2 person = personFixture.buildV2();
-        assertEquals(personFixture.getExpectedJsonRepresentation(2), jsonb.toJson(person));
-    }
-
-    @Test
-    void version3Serializable() {
-        Person.V3 person = personFixture.buildV3();
-        assertEquals(personFixture.getExpectedJsonRepresentation(3), jsonb.toJson(person));
-    }
-
-    @Test
-    void currentVersionSerializable() {
-        Person person = personFixture.buildCurrent();
-        assertEquals(personFixture.getExpectedJsonRepresentationForTheCurrentVersion(), jsonb.toJson(person));
-    }
 
     @Test
     void version1Deserializable() {
