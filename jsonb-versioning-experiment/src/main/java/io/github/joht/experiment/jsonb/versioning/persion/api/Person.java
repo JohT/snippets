@@ -24,37 +24,37 @@ public class Person {
         return 1;
     }
 
-    public static final Person update(Person.V1 previous) {
-        Person person = new Person();
-        person.name = Name.upcast(previous.name);
-        return person;
-    }
-
-    public static final Person update(Person.V2 previous) {
-        Name name = new Name();
-        name.forename = previous.forename;
-        name.surename = previous.surename;
-        Person person = new Person();
-        person.name = name;
-        return person;
-    }
-
-    public static final Person update(Person.V3 previous) {
-        Person person = new Person();
-        person.name = Name.upcast(previous.name);
-        return person;
-    }
-
     public static class V1 {
         public String name;
+
+        public Person toCurrentVersion() {
+            Person person = new Person();
+            person.name = Name.from(this.name);
+            return person;
+        }
     }
 
     public static class V2 {
         public String forename;
         public String surename;
+
+        public Person toCurrentVersion() {
+            Name name = new Name();
+            name.forename = this.forename;
+            name.surename = this.surename;
+            Person person = new Person();
+            person.name = name;
+            return person;
+        }
     }
 
     public static class V3 {
         public Name.V1 name;
+
+        public Person toCurrentVersion() {
+            Person person = new Person();
+            person.name = this.name.toCurrentVersion();
+            return person;
+        }
     }
 }

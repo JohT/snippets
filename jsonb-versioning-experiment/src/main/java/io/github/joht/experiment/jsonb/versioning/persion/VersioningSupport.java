@@ -25,13 +25,13 @@ import java.util.stream.Stream;
  */
 public class VersioningSupport<T> {
 
-    private final Class<T> versionedType;
+    private final Class<T> typeOfCurrentVersion;
     private final Function<Object, String> serializer;
     private final BiFunction<String, Class<?>, Object> deserializer;
 
     public VersioningSupport(Class<T> versionedType, Function<Object, String> serializer,
             BiFunction<String, Class<?>, Object> deserializer) {
-        this.versionedType = versionedType;
+        this.typeOfCurrentVersion = versionedType;
         this.serializer = serializer;
         this.deserializer = deserializer;
     }
@@ -69,18 +69,18 @@ public class VersioningSupport<T> {
         Class<?> versionedTypeToDeserialize = getVersionedType(version);
         Object deserialized = deserializer.apply(json, versionedTypeToDeserialize);
         Method updateMethod = findUpdateMethod(versionedTypeToDeserialize);
-        return upcast(json, deserialized, updateMethod);
+        return update(json, deserialized, updateMethod);
     }
 
     @SuppressWarnings("unchecked")
     private T currentVersionOf(String json) {
-        return (T) deserializer.apply(json, versionedType);
+        return (T) deserializer.apply(json, typeOfCurrentVersion);
     }
 
     // Note: Only supports subclasses named equally to the version right now.
     // Example: Object "Person" with version "1" means there needs to be a static subclass "V1" inside "Person".
     private Class<?> getVersionedType(int version) {
-        String versionedTypeName = versionedType.getName() + "$V" + version;
+        String versionedTypeName = typeOfCurrentVersion.getName() + "$V" + version;
         try {
             return Class.forName(versionedTypeName);
         } catch (ClassNotFoundException e) {
@@ -92,7 +92,7 @@ public class VersioningSupport<T> {
     // Note: Only supports static methods taking a String an returning a int.
     // Example: public static final int Person.getVersion(String json)
     private Method findVersionMethod() {
-        return Stream.of(versionedType.getMethods())//
+        return Stream.of(typeOfCurrentVersion.getMethods())//
                 .filter(method -> Modifier.isStatic(method.getModifiers()))
                 .filter(method -> method.getParameterCount() == 1)
                 .filter(method -> method.getParameterTypes()[0].equals(String.class))
@@ -108,28 +108,29 @@ public class VersioningSupport<T> {
         }
     }
 
-    // Note: Only supports public static methods taking the object to upcast and returning the current version type.
-    // Example: public static final Person update(Persion.V1 previous)
+    // Note: Currently, the update method is taken from the version subtype.
+    // It returns a new object of the current version and does not take any parameters.
+    // The first method that fulfills these restrictions (sorted descending by name) will be taken.
+    // Note: This could be done typesafe using a interface (pro), which needs to be known to all serializable objects (con).
     private Method findUpdateMethod(Class<?> versionedTypeToDeserialize) {
-        return Stream.of(versionedType.getMethods())//
-                .filter(method -> Modifier.isStatic(method.getModifiers()))
-                .filter(method -> method.getParameterCount() == 1)
-                .filter(method -> method.getParameterTypes()[0].equals(versionedTypeToDeserialize))
-                .filter(method -> versionedType.equals(method.getReturnType()))
+        return Stream.of(versionedTypeToDeserialize.getDeclaredMethods())//
+                .filter(method -> method.getParameterCount() == 0)
+                .filter(method -> typeOfCurrentVersion.equals(method.getReturnType()))
+                .sorted((method1, method2) -> method2.getName().compareTo(method1.getName()))
                 .findFirst().get();
     }
 
     @SuppressWarnings("unchecked")
-    private static <T> T upcast(String json, Object deserialized, Method upcaster) {
+    private static <T> T update(String json, Object deserialized, Method updater) {
         try {
-            return (T) upcaster.invoke(null, deserialized);
+            return (T) updater.invoke(deserialized);
         } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-            throw new IllegalArgumentException("Error during upcasting " + json, e);
+            throw new IllegalArgumentException("Error during updating " + json, e);
         }
     }
 
     @Override
     public String toString() {
-        return "VersioningSupport [versionedType=" + versionedType + "]";
+        return "VersioningSupport [typeOfCurrentVersion=" + typeOfCurrentVersion + "]";
     }
 }
