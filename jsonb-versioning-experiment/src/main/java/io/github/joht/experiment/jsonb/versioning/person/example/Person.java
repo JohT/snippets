@@ -10,7 +10,7 @@ package io.github.joht.experiment.jsonb.versioning.person.example;
 public class Person {
     public Name name;
 
-    public static final int getVersion(String json) {
+    public static final int versionOf(String json) {
         // Note: Just a simple example, could be done more controlled using a version field.
         if (json.contains("\"title\"")) {
             return 0; // = current version

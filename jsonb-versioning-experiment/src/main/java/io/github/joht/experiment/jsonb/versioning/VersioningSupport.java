@@ -3,19 +3,20 @@ package io.github.joht.experiment.jsonb.versioning;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
 /**
- * Introduces version support for JSON deserialization.
+ * Introduces an idea for version support for JSON deserialization.
  * <p>
  * The type, that should be deserializable from different versions <br>
  * <b>needs to provide</b>:
  * <ul>
- * <li>A public static method that takes a {@link String} and returns an int (may be named "getVersion")
- * <li>A public static method for every version that takes the old type and returns the current type (may be named "update")
+ * <li>A static method containing "version" in its name, takes a {@link String} and returns an int.
  * <li>A public static subclass for every version called V + version number (e.g. "V1").
+ * <li>A method inside the subclass (old version), that creates a new object of the current version.
  * </ul>
  * <p>
  * This class is independent of any json/serialization libraries, even if it was written with JSON-B in mind.
@@ -28,12 +29,18 @@ public class VersioningSupport<T> {
     private final Class<T> typeOfCurrentVersion;
     private final Function<Object, String> serializer;
     private final BiFunction<String, Class<?>, Object> deserializer;
+    private final Method versionMethod;
 
-    public VersioningSupport(Class<T> versionedType, Function<Object, String> serializer,
-            BiFunction<String, Class<?>, Object> deserializer) {
-        this.typeOfCurrentVersion = versionedType;
+
+    public static final boolean isVersioningSupported(Class<?> typeOfCurrentVersion) {
+        return findVersionMethod(typeOfCurrentVersion).isPresent();
+    }
+
+    public VersioningSupport(Class<T> type, Function<Object, String> serializer, BiFunction<String, Class<?>, Object> deserializer) {
+        this.typeOfCurrentVersion = type;
         this.serializer = serializer;
         this.deserializer = deserializer;
+        this.versionMethod = findVersionMethod(type).orElseThrow(this::versioningNotSupported);
     }
 
     /**
@@ -61,7 +68,6 @@ public class VersioningSupport<T> {
      * @return T
      */
     public T adaptFromJson(String json) {
-        Method versionMethod = findVersionMethod();
         int version = getVersionOf(json, versionMethod);
         if (version == 0) {
             return currentVersionOf(json);
@@ -89,15 +95,21 @@ public class VersioningSupport<T> {
 
     }
 
-    // Note: Only supports static methods taking a String an returning a int.
-    // Example: public static final int Person.getVersion(String json)
-    private Method findVersionMethod() {
-        return Stream.of(typeOfCurrentVersion.getMethods())//
+    // Note: Only supports static methods containing "version" in their name, taking a String and returning an int.
+    // Example: public static final int Person.versionOf(String json)
+    private static Optional<Method> findVersionMethod(Class<?> typeOfCurrentVersion) {
+        return Stream.of(typeOfCurrentVersion.getDeclaredMethods())//
                 .filter(method -> Modifier.isStatic(method.getModifiers()))
+                .filter(method -> method.getName().toLowerCase().contains("version"))
                 .filter(method -> method.getParameterCount() == 1)
                 .filter(method -> method.getParameterTypes()[0].equals(String.class))
                 .filter(method -> int.class.equals(method.getReturnType()))
-                .findFirst().get();
+                .findFirst();
+    }
+
+    private UnsupportedOperationException versioningNotSupported() {
+        return new UnsupportedOperationException(typeOfCurrentVersion.getSimpleName() +
+                " does not support versioning. Version method is missing. Example: 'public static final int getVersion(String json)'");
     }
 
     private static int getVersionOf(String json, Method versionMethod) {

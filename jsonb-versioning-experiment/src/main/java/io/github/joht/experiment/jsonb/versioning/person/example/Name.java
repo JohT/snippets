@@ -13,6 +13,14 @@ public class Name {
     public String surename;
     public String title;
 
+    public static final int versionOf(String json) {
+        // Note: Just a simple example, could be done more controlled using a version field.
+        if (json.contains("\"title\"")) {
+            return 0; // = current version
+        }
+        return 1;
+    }
+
     public static final Name from(String previous) {
         Name name = new Name();
         String[] words = (previous != null) ? previous.split("\\s") : new String[0];
