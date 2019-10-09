@@ -92,7 +92,6 @@ public class VersioningSupport<T> {
         } catch (ClassNotFoundException e) {
             throw new IllegalArgumentException("There is no class " + versionedTypeName + " for Version " + version, e);
         }
-
     }
 
     // Note: Only supports static methods containing "version" in their name, taking a String and returning an int.
