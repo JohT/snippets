@@ -1,5 +1,6 @@
 package io.github.joht.sample.serversentevents;
 
+import javax.json.Json;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
@@ -19,9 +20,10 @@ public class HelloResource {
 
 	@GET
 	@Produces(MediaType.SERVER_SENT_EVENTS + ";element-type=" + MediaType.APPLICATION_JSON)
-	public void hello(//
+	public void helloFailsWithoutReflectionConfig(//
 			@HeaderParam(HttpHeaders.LAST_EVENT_ID_HEADER) @DefaultValue("-1") long lastEventId,
 			@Context SseEventSink eventSink) {
+		
 		Greeting data = new Greeting("hello there");
 		eventSink.send(serverSentEvents.newEventBuilder() //
 				.mediaType(MediaType.APPLICATION_JSON_TYPE)
@@ -47,5 +49,22 @@ public class HelloResource {
 				.build());
 		eventSink.close();
 	}
-
+	
+	@GET
+	@Path("/jsonp")
+	@Produces(MediaType.SERVER_SENT_EVENTS + ";element-type=" + MediaType.APPLICATION_JSON)
+	public void helloJsonP(//
+			@HeaderParam(HttpHeaders.LAST_EVENT_ID_HEADER) @DefaultValue("-1") long lastEventId,
+			@Context SseEventSink eventSink) {
+		
+		String json = Json.createObjectBuilder().add("text", "hello there").build().toString();
+		eventSink.send(serverSentEvents.newEventBuilder() //
+				.mediaType(MediaType.APPLICATION_JSON_TYPE)
+				.data(json)
+				.id(Long.toString(lastEventId + 1))
+				.reconnectDelay(5000)
+				.name("JsonpGreeting")
+				.build());
+		eventSink.close();
+	}
 }

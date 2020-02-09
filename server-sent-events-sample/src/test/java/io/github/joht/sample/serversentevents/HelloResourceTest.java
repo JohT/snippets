@@ -12,20 +12,22 @@ import io.quarkus.test.junit.QuarkusTest;
 @QuarkusTest
 public class HelloResourceTest {
 
-    @Test
-    public void testHelloJsonEndpoint() {
-        given()
-          .when().get("/hello")
-          .then()
-          .contentType(MediaType.SERVER_SENT_EVENTS)
-             .body(containsString("hello there"));
-    }
-    @Test
-    public void testHelloTextEndpoint() {
-    	given()
-    	.when().get("/hello/text")
-    	.then()
-    	.contentType(MediaType.SERVER_SENT_EVENTS)
-    	.body(containsString("hello there"));
-    }
+	@Test
+	public void testHelloJsonEndpoint() {
+		given()
+			.when().get("/hello").then().contentType(MediaType.SERVER_SENT_EVENTS)
+				.body(containsString("hello there"));
+	}
+
+	@Test
+	public void testHelloTextEndpoint() {
+		given().when().get("/hello/text").then().contentType(MediaType.SERVER_SENT_EVENTS)
+				.body(containsString("hello there"));
+	}
+	
+	@Test
+	public void testHelloJsonpEndpoint() {
+		given().when().get("/hello/jsonp").then().contentType(MediaType.SERVER_SENT_EVENTS)
+		.body(containsString("hello there"));
+	}
 }

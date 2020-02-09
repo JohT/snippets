@@ -1,0 +1,8 @@
+[
+	{
+		"name": "io.github.joht.sample.serversentevents.Greeting",
+		"allDeclaredFields": true,
+		"allDeclaredMethods": true,
+		"allDeclaredConstructors": true
+	}
+]
