@@ -23,7 +23,7 @@ public class Issue87ReproducerTest {
 			.importPackages("io.github.joht.archunit.reproducer");
 
 	@Test
-	//TODO This test fails, but it shouldn't, since there is no call to a deprecated method
+	//Note: Since archunit 0.14.0 this test succeeds.
 	public void testNoCallsToDeprecatedMethods() {
 		ArchRuleDefinition.classes().that().resideInAnyPackage("..reproducer..")
 				.should().onlyCallMethodsThat(are(not(annotatedWith(Deprecated.class))))
