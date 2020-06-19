@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence/orm"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence/orm http://xmlns.jcp.org/xml/ns/persistence/orm_2_1.xsd">
+
+	<!-- Customization of the database schema name -->
+
+	<mapped-superclass class="org.axonframework.eventsourcing.eventstore.AbstractEventEntry">
+		<attributes>
+			<basic name="payload" optional="false">
+				<column column-definition="jsonb" length="1000" />
+				<convert converter="JpaPostgreSqlJsonbBytearrayConverter" />
+			</basic>
+			<basic name="metaData" optional="false">
+				<column column-definition="jsonb" length="1000" />
+				<convert converter="JpaPostgreSqlJsonbBytearrayConverter" />
+			</basic>
+		</attributes>
+	</mapped-superclass>
+	
+	<mapped-superclass class="org.axonframework.eventhandling.saga.repository.jpa.AbstractSagaEntry">
+		<attributes>
+			<basic name="serializedSaga" optional="false">
+				<column name="serializedsaga" column-definition="jsonb" length="1000" />
+				<convert converter="JpaPostgreSqlJsonbBytearrayConverter" />
+			</basic>
+		</attributes>
+	</mapped-superclass>
+
+	<mapped-superclass class="org.axonframework.eventhandling.tokenstore.AbstractTokenEntry">
+		<attributes>
+			<basic name="token" optional="false">
+				<column column-definition="jsonb" length="1000" />
+				<convert converter="JpaPostgreSqlJsonbBytearrayConverter" />
+			</basic>
+		</attributes>
+	</mapped-superclass>
+
+</entity-mappings>

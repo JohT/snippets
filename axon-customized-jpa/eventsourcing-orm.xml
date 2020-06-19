@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence/orm"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence/orm http://xmlns.jcp.org/xml/ns/persistence/orm_2_1.xsd">
+
+	<!-- Customization of table names -->
+	<!-- Caution: Every (overriding) tag needs to be fully specified -->
+	<!-- Annotations are disabled, when the representing xml tag is defined -->
+	<!-- It is not possible to only override the table name. -->
+	<!-- All the @Table-Settings need to be taken over to this xml -->
+
+	<entity class="org.axonframework.eventsourcing.eventstore.jpa.DomainEventEntry">
+		<table schema="MYSCHEMA" name="MYDOMAIN_DOMAINEVENTENTRY">
+			<index name="MYDOMAIN_DOMAINEVENTENTRY_UNIQUE_INDEX" column-list="aggregateIdentifier,sequenceNumber" unique="true"></index>
+		</table>
+		<table-generator name="MYDOMAIN_DOMAINEVENTENTRY_GLOBAL_INDEX" schema="MYSCHEMA" table="MYDOMAIN_EVENTSOURCING_SEQUENCE" />
+		<attributes>
+			<id name="globalIndex">
+				<generated-value generator="MYDOMAIN_DOMAINEVENTENTRY_GLOBAL_INDEX" strategy="TABLE" />
+			</id>
+		</attributes>
+	</entity>
+
+	<entity class="org.axonframework.eventsourcing.eventstore.jpa.SnapshotEventEntry">
+		<table schema="MYSCHEMA" name="MYDOMAIN_SNAPSHOTEVENTENTRY"></table>
+		<id-class class="org.axonframework.eventsourcing.eventstore.AbstractSnapshotEventEntry.PK" />
+		<attributes>
+			<id name="aggregateIdentifier"></id>
+			<id name="sequenceNumber"></id>
+			<id name="type"></id>
+		</attributes>
+	</entity>
+
+	<entity class="org.axonframework.eventhandling.saga.repository.jpa.AssociationValueEntry">
+		<table schema="MYSCHEMA" name="MYDOMAIN_ASSOCIATIONVALUEENTRY">
+			<index name="MYDOMAIN_ASSOCIATIONVALUEENTRY_INDEX_ASSOCIATION" column-list="sagaType, associationKey, associationValue" unique="false"></index>
+			<index name="MYDOMAIN_ASSOCIATIONVALUEENTRY_INDEX_SAGA" column-list="sagaId, sagaType" unique="false"></index>
+		</table>
+		<table-generator name="ASSOCIATIONVALUEENTRY_ID" schema="MYSCHEMA" table="MYDOMAIN_EVENTSOURCING_SEQUENCE" />
+		<attributes>
+			<id name="id">
+				<generated-value generator="ASSOCIATIONVALUEENTRY_ID" strategy="TABLE" />
+			</id>
+		</attributes>
+	</entity>
+
+	<entity class="org.axonframework.eventhandling.tokenstore.jpa.TokenEntry">
+		<table schema="MYSCHEMA" name="MYDOMAIN_TOKENENTRY"></table>
+		<id-class class="org.axonframework.eventhandling.tokenstore.jpa.TokenEntry.PK" />
+	</entity>
+
+	<entity class="org.axonframework.eventhandling.saga.repository.jpa.SagaEntry">
+		<table schema="MYSCHEMA" name="MYDOMAIN_SAGAENTRY"></table>
+	</entity>
+
+</entity-mappings>
