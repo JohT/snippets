@@ -1,0 +1,31 @@
+# Ignore Axon Server JAR files
+axonserver*.jar
+quicktest-*.jar
+axoniq.license
+
+# Ignore Maven build results
+**/target
+
+# Ignore Axon Server generated files
+AxonIQ.pid
+
+# Ignore IDE/Editor configuration
+.idea
+*.iml
+.vscode
+
+# Generated/test files
+**/ssl
+**/*.token
+**/*-token
+axonserver.properties
+*.csr
+*.srl
+*.crt
+*.key
+*.p12
+*.log
+*.db
+**/default
+**/_admin
+*.yml
