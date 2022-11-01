@@ -32,3 +32,8 @@ jobs:
     - name: Build and Test jsonb-versioning-experiment
       working-directory: jsonb-versioning-experiment
       run: mvn -B test --file pom.xml
+
+    - name: Build and Test server-sent-events-sample
+      working-directory: server-sent-events-sample
+      run: mvn -B verify --file pom.xml
+
