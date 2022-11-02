@@ -32,7 +32,6 @@ public class HelloResource {
 				.reconnectDelay(5000)
 				.name(data.getClass().getSimpleName())
 				.build());
-		eventSink.close();
 	}
 
 	@GET
@@ -47,7 +46,6 @@ public class HelloResource {
 				.reconnectDelay(5000)
 				.name("TextGreeting")
 				.build());
-		eventSink.close();
 	}
 	
 	@GET
@@ -65,6 +63,5 @@ public class HelloResource {
 				.reconnectDelay(5000)
 				.name("JsonpGreeting")
 				.build());
-		eventSink.close();
 	}
 }
