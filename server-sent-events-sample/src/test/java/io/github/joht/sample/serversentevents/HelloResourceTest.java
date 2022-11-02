@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import static org.awaitility.Awaitility.await;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
@@ -51,14 +52,8 @@ class HelloResourceTest {
 		try (SseEventSource sse = createServerSentEventsSource(subResource)) {
 			sse.register(this::onServerSentEventMessage);
 			sse.open();
-
-			for (int i = 0; i < 6; i++) {
-				Thread.sleep(100);
-				if (receivedDataFields.toString().contains(expectedResponseText)) {
-					return;
-				}
-			}
-			fail("Missing expected response " + expectedResponseText + " in stream " + receivedDataFields);
+			await().atMost(1, TimeUnit.SECONDS)
+					.until(() -> receivedDataFields.toString().contains(expectedResponseText));
 		}
 	}
 
@@ -67,7 +62,7 @@ class HelloResourceTest {
 		return SseEventSource.target(client).reconnectingEvery(5, TimeUnit.SECONDS).build();
 	}
 
-	void onServerSentEventMessage(InboundSseEvent event) {
+	private void onServerSentEventMessage(InboundSseEvent event) {
 		receivedDataFields.add(event.readData());
 	}
 
