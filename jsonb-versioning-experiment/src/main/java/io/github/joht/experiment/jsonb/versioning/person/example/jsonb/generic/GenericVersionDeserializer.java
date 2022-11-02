@@ -7,20 +7,18 @@ import java.util.concurrent.ConcurrentMap;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
-import javax.json.bind.Jsonb;
-import javax.json.bind.JsonbBuilder;
-import javax.json.bind.JsonbConfig;
-import javax.json.bind.serializer.DeserializationContext;
-import javax.json.bind.serializer.JsonbDeserializer;
-import javax.json.stream.JsonParser;
-
 import io.github.joht.experiment.jsonb.versioning.VersioningSupport;
-import io.github.joht.experiment.jsonb.versioning.person.example.Person;
+import jakarta.json.bind.Jsonb;
+import jakarta.json.bind.JsonbBuilder;
+import jakarta.json.bind.JsonbConfig;
+import jakarta.json.bind.serializer.DeserializationContext;
+import jakarta.json.bind.serializer.JsonbDeserializer;
+import jakarta.json.stream.JsonParser;
 
 /**
- * Deserializes {@link Person}-Objects supporting all previous version.
+ * Deserializes Objects with versioning support.
  * <p>
- * TODO Generic versioning maybe using an interface or a wrapper.
+ * TODO Generic versioning may be using an interface or a wrapper.
  * 
  * @author JohT
  */

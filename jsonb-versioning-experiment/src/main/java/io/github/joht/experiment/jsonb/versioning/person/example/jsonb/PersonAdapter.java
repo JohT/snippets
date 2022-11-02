@@ -1,10 +1,10 @@
 package io.github.joht.experiment.jsonb.versioning.person.example.jsonb;
 
-import javax.json.JsonObject;
-import javax.json.bind.Jsonb;
-import javax.json.bind.JsonbBuilder;
-import javax.json.bind.JsonbConfig;
-import javax.json.bind.adapter.JsonbAdapter;
+import jakarta.json.JsonObject;
+import jakarta.json.bind.Jsonb;
+import jakarta.json.bind.JsonbBuilder;
+import jakarta.json.bind.JsonbConfig;
+import jakarta.json.bind.adapter.JsonbAdapter;
 
 import io.github.joht.experiment.jsonb.versioning.VersioningSupport;
 import io.github.joht.experiment.jsonb.versioning.person.example.Person;

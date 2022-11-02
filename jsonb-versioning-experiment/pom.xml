@@ -25,8 +25,8 @@
 		<maven.compiler.source>17</maven.compiler.source>
 		<maven.compiler.target>17</maven.compiler.target>
 
-		<jsonb.version>1.0</jsonb.version>
-		<jsonp.version>1.1.4</jsonp.version>
+		<jsonb.version>3.0.0</jsonb.version>
+		<jsonp.version>2.1.1</jsonp.version>
 
 		<junit.version>5.9.1</junit.version>
 		<hamcrest.version>2.2</hamcrest.version>
@@ -35,16 +35,16 @@
 	<dependencies>
 		<!-- Microprofile JSON-B (Binding) -->
 		<dependency>
-			<groupId>javax.json.bind</groupId>
-			<artifactId>javax.json.bind-api</artifactId>
+			<groupId>jakarta.json.bind</groupId>
+			<artifactId>jakarta.json.bind-api</artifactId>
 			<version>${jsonb.version}</version>
 			<scope>provided</scope>
 		</dependency>
 
 		<!-- Microprofile JSON-P (Parser) -->
 		<dependency>
-			<groupId>javax.json</groupId>
-			<artifactId>javax.json-api</artifactId>
+			<groupId>jakarta.json</groupId>
+			<artifactId>jakarta.json-api</artifactId>
 			<version>${jsonp.version}</version>
 			<scope>provided</scope>
 		</dependency>
@@ -73,20 +73,6 @@
 			<artifactId>yasson</artifactId>
 			<version>3.0.2</version>
 			<scope>test</scope>
-			<exclusions>
-				<exclusion>
-					<artifactId>jakarta.json</artifactId>
-					<groupId>org.glassfish</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>jakarta.json.bind-api</artifactId>
-					<groupId>jakarta.json.bind</groupId>
-				</exclusion>
-				<exclusion>
-					<artifactId>jakarta.json-api</artifactId>
-					<groupId>jakarta.json</groupId>
-				</exclusion>
-			</exclusions>
 		</dependency>
 	</dependencies>
 
