@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <groupId>io.github.joht.sample.serversentevents</groupId>
   <artifactId>server-sent-events-sample</artifactId>
@@ -19,7 +19,7 @@
     <quarkus.platform.artifact-id>quarkus-universe-bom</quarkus.platform.artifact-id>
     <quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
     <quarkus.platform.version>3.0.0.Alpha1</quarkus.platform.version>
-    
+
     <awaitility.version>4.2.0</awaitility.version>
   </properties>
 
@@ -54,11 +54,11 @@
       <artifactId>rest-assured</artifactId>
       <scope>test</scope>
     </dependency>
-		<dependency>
-			<groupId>org.jboss.resteasy</groupId>
-			<artifactId>resteasy-client</artifactId>
-			<scope>test</scope>
-		</dependency>
+    <dependency>
+      <groupId>org.jboss.resteasy</groupId>
+      <artifactId>resteasy-client</artifactId>
+      <scope>test</scope>
+    </dependency>
     <dependency>
       <groupId>org.awaitility</groupId>
       <artifactId>awaitility</artifactId>
@@ -96,6 +96,7 @@
       </plugin>
     </plugins>
   </build>
+
   <profiles>
     <profile>
       <id>native</id>
@@ -105,28 +106,7 @@
         </property>
       </activation>
       <build>
-	  <plugins>
-<!-- uncomment this section to activate reflection-config.json -->
-<!-- 		<plugin> -->
-<!-- 			<groupId>io.quarkus</groupId> -->
-<!-- 			<artifactId>quarkus-maven-plugin</artifactId> -->
-<!-- 			<version>${quarkus-plugin.version}</version> -->
-<!-- 			<executions> -->
-<!-- 				<execution> -->
-<!-- 					<goals> -->
-<!-- 						<goal>native-image</goal> -->
-<!-- 					</goals> -->
-<!-- 					<configuration> -->
-<!-- 						<enableHttpUrlHandler>true</enableHttpUrlHandler> -->
-<!-- 						<additionalBuildArgs> -->
-<!-- 							<additionalBuildArg> -->
-<!-- 								-H:ReflectionConfigurationFiles=${project.basedir}/reflection-config.json -->
-<!-- 							</additionalBuildArg> -->
-<!-- 						</additionalBuildArgs> -->
-<!-- 					</configuration> -->
-<!-- 				</execution> -->
-<!-- 			</executions> -->
-<!-- 		</plugin> -->
+        <plugins>
           <plugin>
             <artifactId>maven-failsafe-plugin</artifactId>
             <version>${surefire-plugin.version}</version>
