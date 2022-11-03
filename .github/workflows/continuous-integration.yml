@@ -1,6 +1,13 @@
 name: Continuous Integration
 
-on: [push]
+on:
+  push:
+    # Ignore changes in documentation and config
+    paths-ignore: 
+      - '**/LICENSE'
+      - '**/renovate.json'
+      - '**/*.md'
+      - '**/*.txt'
 
 jobs:
   build:

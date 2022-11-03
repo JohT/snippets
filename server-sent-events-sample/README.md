@@ -1,12 +1,12 @@
 # server-sent-events-sample project
 
 This project was made to reproduce missing data from server sent events (SSE)
-in Quarkus version 1.2.0.Final / native mode in JSON format. 
+in Quarkus version 1.2.0.Final / native mode in JSON format.
 The substrate works as expected.
 
 To get the results of the failed test, simply run:
 
-```
+```shell
 mvn clean verify -Dnative
 ```
 
@@ -17,7 +17,8 @@ If you want to learn more about Quarkus, please visit its website: https://quark
 ## Running the application in dev mode
 
 You can run your application in dev mode that enables live coding using:
-```
+
+```shell
 ./mvnw quarkus:dev
 ```
 
