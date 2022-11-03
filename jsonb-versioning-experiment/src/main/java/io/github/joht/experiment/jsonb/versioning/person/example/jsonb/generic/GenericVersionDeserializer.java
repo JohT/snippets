@@ -1,5 +1,6 @@
 package io.github.joht.experiment.jsonb.versioning.person.example.jsonb.generic;
 
+import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
@@ -7,24 +8,26 @@ import java.util.concurrent.ConcurrentMap;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
-import javax.json.bind.Jsonb;
-import javax.json.bind.JsonbBuilder;
-import javax.json.bind.JsonbConfig;
-import javax.json.bind.serializer.DeserializationContext;
-import javax.json.bind.serializer.JsonbDeserializer;
-import javax.json.stream.JsonParser;
-
 import io.github.joht.experiment.jsonb.versioning.VersioningSupport;
-import io.github.joht.experiment.jsonb.versioning.person.example.Person;
+import jakarta.json.bind.Jsonb;
+import jakarta.json.bind.JsonbBuilder;
+import jakarta.json.bind.JsonbConfig;
+import jakarta.json.bind.serializer.DeserializationContext;
+import jakarta.json.bind.serializer.JsonbDeserializer;
+import jakarta.json.stream.JsonParser;
 
 /**
- * Deserializes {@link Person}-Objects supporting all previous version.
+ * Deserializes Objects with versioning support.
  * <p>
- * TODO Generic versioning maybe using an interface or a wrapper.
+ * Since a Deserializer can't be registered for all Objects (anymore since yasson 1.0.8),
+ * there needs to be a common super type, here in this example Serializable.
+ * 
+ * <p>
+ * TODO Generic versioning may be using an interface or a wrapper.
  * 
  * @author JohT
  */
-public class GenericVersionDeserializer implements JsonbDeserializer<Object> {
+public class GenericVersionDeserializer implements JsonbDeserializer<Serializable> {
 
     private final ConcurrentMap<String, Optional<VersioningSupport<?>>> versioning = new ConcurrentHashMap<>();
     private final Function<Object, String> serializer;
@@ -35,19 +38,24 @@ public class GenericVersionDeserializer implements JsonbDeserializer<Object> {
         return new GenericVersionDeserializer(jsonb::toJson, jsonb::fromJson);
     }
 
-    public GenericVersionDeserializer(Function<Object, String> serializer, BiFunction<String, Class<?>, Object> deserializer) {
+    public GenericVersionDeserializer(Function<Object, String> serializer,
+            BiFunction<String, Class<?>, Object> deserializer) {
         this.serializer = serializer;
         this.deserializer = deserializer;
     }
 
     @Override
-    public Object deserialize(JsonParser parser, DeserializationContext ctx, Type rtType) {
+    public Serializable deserialize(JsonParser parser, DeserializationContext ctx, Type rtType) {
         if (!(rtType instanceof Class)) {
-            throw new UnsupportedOperationException(GenericVersionDeserializer.class.getSimpleName() + " does not support type " + rtType + ", because it is not a class.");
+            throw new UnsupportedOperationException(GenericVersionDeserializer.class.getSimpleName()
+                    + " does not support type " + rtType + ", because it is not a class.");
         }
         Class<?> realtimeType = (Class<?>) rtType;
-        String json = parser.getObject().toString();
-        return versioning.computeIfAbsent(realtimeType.getName(), name -> getVersioningSupport(realtimeType))//
+        if (!parser.hasNext()) {
+            return ctx.deserialize(rtType, parser);
+        }
+        String json =  parser.getObject().toString();
+        return (Serializable) versioning.computeIfAbsent(realtimeType.getName(), name -> getVersioningSupport(realtimeType))//
                 .map(versionSupport -> deserializeVersioned(json, versionSupport))
                 .orElseGet(() -> deserializer.apply(json, realtimeType));
     }

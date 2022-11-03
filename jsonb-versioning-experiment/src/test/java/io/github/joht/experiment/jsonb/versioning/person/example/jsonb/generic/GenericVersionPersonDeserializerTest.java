@@ -1,8 +1,8 @@
 package io.github.joht.experiment.jsonb.versioning.person.example.jsonb.generic;
 
-import javax.json.bind.Jsonb;
-import javax.json.bind.JsonbBuilder;
-import javax.json.bind.JsonbConfig;
+import jakarta.json.bind.Jsonb;
+import jakarta.json.bind.JsonbBuilder;
+import jakarta.json.bind.JsonbConfig;
 
 import org.junit.jupiter.api.Test;
 
