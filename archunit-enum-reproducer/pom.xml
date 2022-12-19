@@ -16,7 +16,7 @@
 
 		<junit.version>5.9.1</junit.version>
 		<archunit.version>1.0.1</archunit.version>
-		<sl4j.simple.version>2.0.5</sl4j.simple.version>
+		<sl4j.simple.version>2.0.6</sl4j.simple.version>
 	</properties>
 
 	<dependencies>
