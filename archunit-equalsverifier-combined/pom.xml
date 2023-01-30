@@ -17,7 +17,7 @@
 		<slf4j.version>2.0.6</slf4j.version>
 		<junit.version>5.9.2</junit.version>
 		<archunit.version>1.0.1</archunit.version>
-		<equalsverifier.version>3.12.3</equalsverifier.version>
+		<equalsverifier.version>3.12.4</equalsverifier.version>
 	</properties>
 
 	<dependencies>
