@@ -28,7 +28,7 @@
 		<jsonb.version>3.0.0</jsonb.version>
 		<jsonp.version>2.1.2</jsonp.version>
 
-		<junit.version>5.9.2</junit.version>
+		<junit.version>5.9.3</junit.version>
 		<hamcrest.version>2.2</hamcrest.version>
 	</properties>
 
