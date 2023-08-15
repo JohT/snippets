@@ -7,5 +7,13 @@
     ":automergePatch",
     ":automergeRequireAllStatusChecks",
     "group:recommended"
+  ],
+   "packageRules": [
+    {
+      "groupName": "Quarkus",
+      "matchPackagePrefixes": [
+        "io.quarkus:"
+      ]
+    }
   ]
 }
