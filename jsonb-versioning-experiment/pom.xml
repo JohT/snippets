@@ -26,7 +26,7 @@
 		<maven.compiler.target>17</maven.compiler.target>
 
 		<jsonb.version>3.0.0</jsonb.version>
-		<jsonp.version>2.1.2</jsonp.version>
+		<jsonp.version>2.1.3</jsonp.version>
 
 		<junit.version>5.10.0</junit.version>
 		<hamcrest.version>2.2</hamcrest.version>
