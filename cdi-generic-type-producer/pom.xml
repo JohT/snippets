@@ -21,7 +21,7 @@
 		<jakarta.cdi-api.version>4.0.1</jakarta.cdi-api.version>
 		
 		<!-- Test libraries -->
-		<weld-junit5.version>4.0.0.Final</weld-junit5.version>
+		<weld-junit5.version>4.0.1.Final</weld-junit5.version>
 		<junit-jupiter.version>5.10.0</junit-jupiter.version>
 	</properties>
 
