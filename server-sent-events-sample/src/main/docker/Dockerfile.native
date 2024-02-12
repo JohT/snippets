@@ -14,7 +14,7 @@
 # docker run -i --rm -p 8080:8080 quarkus/server-sent-events-sample
 #
 ###
-FROM registry.access.redhat.com/ubi8/ubi-minimal:8.9-1108.1706691034
+FROM registry.access.redhat.com/ubi8/ubi-minimal:8.9-1108.1706795067
 WORKDIR /work/
 COPY target/*-runner /work/application
 RUN chmod 775 /work /work/application
