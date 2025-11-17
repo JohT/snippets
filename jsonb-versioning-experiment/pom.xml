@@ -14,7 +14,7 @@
 		Contains ideas and experiments for versioning with JSON-B (Binding).
 		It should be possible to deserialize a JSON String, that was serialized with an older version of an object.
 	</description>
-	<url>https://github.com/JohT/snippets/tree/master/jsonb-versioning-experiment</url>
+	<url>https://github.com/JohT/snippets/tree/main/jsonb-versioning-experiment</url>
 	<licenses>
 		<license>
 			<name>Apache License, Version 2.0</name>
