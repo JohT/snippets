@@ -24,23 +24,5 @@ jobs:
         java-version: 25
         cache: 'maven'
         
-    - name: Build and Test archunit-enum-reproducer
-      working-directory: archunit-enum-reproducer
-      run: mvn -B test --file pom.xml
-            
-    - name: Build and Test archunit-equalsverifier-combined
-      working-directory: archunit-equalsverifier-combined
-      run: mvn -B test --file pom.xml
-
-    - name: Build and Test cdi-generic-type-producer
-      working-directory: cdi-generic-type-producer
-      run: mvn -B verify --file pom.xml
-
-    - name: Build and Test jsonb-versioning-experiment
-      working-directory: jsonb-versioning-experiment
-      run: mvn -B test --file pom.xml
-
-    - name: Build and Test server-sent-events-sample
-      working-directory: server-sent-events-sample
-      run: mvn -B verify --file pom.xml
-
+    - name: Build and test all snippets
+      run: mvn --batch-mode test
