@@ -8,9 +8,9 @@ import com.tngtech.archunit.core.importer.ClassFileImporter;
 import com.tngtech.archunit.core.importer.ImportOption;
 import com.tngtech.archunit.lang.syntax.ArchRuleDefinition;
 
-import nl.jqno.equalsverifier.ConfiguredEqualsVerifier;
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
+import nl.jqno.equalsverifier.api.ConfiguredEqualsVerifier;
 
 /**
  * This test shows, how <i>archunit</i> and <i>equalsverifier</i> can join their forces <br>
