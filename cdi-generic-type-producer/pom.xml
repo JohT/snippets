@@ -14,7 +14,7 @@
 	<description>Simple example for an generic type CDI producer</description>
 
 	<properties>
-		<maven.failsafe.version>3.5.4</maven.failsafe.version>
+		<maven.failsafe.version>3.5.5</maven.failsafe.version>
 		
 		<!-- APIs -->
 		<jakarta.cdi-api.version>4.1.0</jakarta.cdi-api.version>
