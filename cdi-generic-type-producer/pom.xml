@@ -17,7 +17,7 @@
 		<maven.failsafe.version>3.5.6</maven.failsafe.version>
 		
 		<!-- APIs -->
-		<jakarta.cdi-api.version>4.1.0</jakarta.cdi-api.version>
+		<jakarta.cdi-api.version>5.0.0</jakarta.cdi-api.version>
 		
 		<!-- Test libraries -->
 		<weld-junit5.version>5.0.3.Final</weld-junit5.version>
